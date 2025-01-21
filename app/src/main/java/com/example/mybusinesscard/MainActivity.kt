@@ -1,6 +1,7 @@
 package com.example.mybusinesscard
 
 import android.graphics.Color
+import android.media.Image
 import android.os.Bundle
 import android.provider.ContactsContract.Profile
 import androidx.activity.ComponentActivity
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,106 +40,72 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 @Composable
-fun Profile( modifier: Modifier = Modifier) {
+fun Profile(modifier: Modifier = Modifier ) {
     Box(
         modifier = modifier.padding(16.dp)
-    ) {
-        Column (
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            ){
-            val Image = painterResource(R.drawable.android_logo)
-            Image(painter = Image, contentDescription = null)
-            Text(
-                text = stringResource(R.string.roan_miles_d_tanduyan),
-
-            )
-            Text(
-                stringResource(R.string.android_developer_extraordinaire),
-            )
-        }
-    }
-}
-@Composable
-fun Info() {
-    Box(
-        modifier = Modifier.padding(16.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val image = painterResource(R.drawable.android_logo)
+            Image(painter = image, contentDescription = null)
+            Text(
+                text = stringResource(R.string.roan_miles_d_tanduyan),
+                modifier = Modifier.padding(top = 8.dp),
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = stringResource(R.string.android_developer_extraordinaire),
+                modifier = Modifier.padding(top = 4.dp),
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
+@Composable
+fun Info(imageRes: Int, info: String, modifier: Modifier = Modifier) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             val imageSize = 24.dp
-
-            val imageOne = painterResource(R.drawable.telephone)
-            val imageTwo = painterResource(R.drawable.share)
-            val imageThree = painterResource(R.drawable.share)
-
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(modifier = modifier.padding(start = 50.dp, end = 50.dp, bottom = 16.dp)) {
                 Image(
-                    painter = imageOne,
+                    painter = painterResource(id = imageRes),
                     contentDescription = null,
                     modifier = Modifier.size(imageSize)
                 )
-                Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Text(
-                        text = stringResource(R.string._09982237876),
-                        textAlign = TextAlign.Start,
-                    )
-                }
+                Text(
+                    text = info,
+                    modifier = Modifier.padding(start = 16.dp).fillMaxWidth(),
+                    textAlign = TextAlign.Start
+                )
             }
 
+        }
+    }
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = imageTwo,
-                    contentDescription = null,
-                    modifier = Modifier.size(imageSize)
-                )
-                Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Text(
-                        text = stringResource(R.string.android_dev),
-                        textAlign = TextAlign.Start,
-                    )
-                }
-            }
 
-            // Third Row
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter = imageThree,
-                    contentDescription = null,
-                    modifier = Modifier.size(imageSize)
-                )
-                Column(modifier = Modifier.padding(start = 8.dp)) {
-                    Text(
-                        text = stringResource(R.string.roanmilestanduyan_gmail_com),
-                        textAlign = TextAlign.Start,
-                    )
-                }
+@Composable
+fun ScreenHere(modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(),
+        verticalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Profile()
+        Box (modifier = modifier.padding(16.dp)){
+            Column {
+                Info(imageRes = R.drawable.telephone, info = stringResource(R.string.number))
+                Info(imageRes = R.drawable.share, info = stringResource(R.string.androiddev))
+                Info(imageRes = R.drawable.mail, info = stringResource(R.string.rmdtanduyan_addu_edu_ph))
             }
         }
     }
 }
 
-
-
-@Composable
-fun ScreenHere(){
-    Column {
-        Profile()
-        Info()
-    }
-}
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
